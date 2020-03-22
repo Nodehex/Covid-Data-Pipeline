@@ -2,13 +2,14 @@ import csv
 import requests
 import os
 
-if not os.path.exists('data'):
-    os.makedirs('data')
+directory = 'csv'
+if not os.path.exists(directory):
+    os.makedirs(directory)
 
 def download_csv(url, filename):
     data = requests.get(url)
 
-    with open(f'data/{filename}.csv', 'w') as f:
+    with open(f'{directory}/{filename}.csv', 'w') as f:
         writer = csv.writer(f)
         for line in data.iter_lines():
             writer.writerow(line.decode('utf-8').split(','))
