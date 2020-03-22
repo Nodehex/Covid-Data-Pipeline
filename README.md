@@ -6,4 +6,7 @@ Data Pipeline for Covid dashboard
 [Source](https://ourworldindata.org/coronavirus-source-data)
 
 
-## Export data to JSON
+## TODO
+
+- Change json format
+- Create a growth rate % dataset
