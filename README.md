@@ -1,6 +1,9 @@
 # Covid-Data-Pipeline
 Data Pipeline for Covid dashboard
 
-## Import Data from WHO as a start
+## Import Data from European Center of Disease Control
 
-## Export data to JSON probably
+[Source](https://ourworldindata.org/coronavirus-source-data)
+
+
+## Export data to JSON
