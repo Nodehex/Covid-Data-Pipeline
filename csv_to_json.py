@@ -7,7 +7,7 @@ if not os.path.exists(json_dir):
 
 csv_dir = './csv'
 for filename in os.listdir(csv_dir):
-    if filename.endswith('.csv') or filename.endswith('.py'): 
+    if filename.endswith('.csv'): 
         csv_path = os.path.join(csv_dir, filename)
         df = pd.read_csv(csv_path, index_col=0)
         df = df.fillna(0)
