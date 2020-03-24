@@ -24,7 +24,7 @@ class GetData():
         data = requests.get(self.url)
         data.raise_for_status()
         data = pd.read_csv(io.StringIO(data.content.decode('utf-8')), index_col=0)
-        data = data.fillna(0).astype(int)
+        data = data.fillna(0)
         self.data = data
 
     def __str__(self):
@@ -51,7 +51,7 @@ class GetData():
 
     def save_to_file(self):
         print(f'Writing {self.file_name} to file')
-        self.data.to_csv(f"./{self.directory}/{self.file_name}.csv", index=False)
+        self.data.to_csv(f"./{self.directory}/{self.file_name}.csv", na_rep="0")
         print(f'Writing {self.file_name} complete')
 
 
@@ -68,3 +68,10 @@ total_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/total_deaths.csv'
 total_deaths = GetData(total_deaths_url)
 total_deaths.import_data()
 total_deaths.compare_data()
+
+
+# European Center of Disease Control Total Combined
+total_combined_url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
+total_combined = GetData(total_combined_url)
+total_combined.import_data()
+total_combined.compare_data()
