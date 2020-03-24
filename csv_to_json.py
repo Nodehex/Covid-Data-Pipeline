@@ -12,4 +12,4 @@ for filename in os.listdir(csv_dir):
         df = pd.read_csv(csv_path, index_col=0)
         df = df.fillna(0)
         filename = filename.split('.')[0]
-        df.to_json(f'./{json_dir}/{filename}.json')
+        df.to_json(f'./{json_dir}/{filename}.json',orient='columns')
