@@ -10,11 +10,12 @@ if not os.path.isdir(csv_dir):
 
 os.makedirs(json_dir, exist_ok=True)
 
-file_name = 'full_data.csv'
-csv_path = os.path.join(csv_dir, file_name)
+file_name = 'full_data'
+
+csv_path = os.path.join(csv_dir, f'{file_name}.csv')
 df = pd.read_csv(csv_path)
 df = df.rename(columns={"total_deaths": "deaths", "total_cases": "cases"})
-file_name = file_name.split('.')[0]
+
 data = {}
 for group in df.groupby(['location']):
     data[group[0]] = { 
