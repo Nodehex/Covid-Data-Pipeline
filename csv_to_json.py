@@ -2,10 +2,14 @@ import os
 import pandas as pd
 
 json_dir = 'json'
-if not os.path.exists(json_dir):
-    os.makedirs(json_dir)
+
+os.makedirs(json_dir, exist_ok=True)
 
 csv_dir = './csv'
+
+if not os.path.isdir(csv_dir):
+    raise NameError('csv folder doesnt exist')
+
 for filename in os.listdir(csv_dir):
     if filename.endswith('.csv'): 
         csv_path = os.path.join(csv_dir, filename)
