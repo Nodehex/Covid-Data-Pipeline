@@ -13,11 +13,7 @@ class GetData():
         self.old_data = None
 
     def make_dir(self):
-        if not os.path.exists(self.directory):
-            print("Directory not found. Creating")
-            os.makedirs(self.directory)
-        else:
-            print("Directory already exists")
+        os.makedirs(self.directory, exist_ok=True)
 
     def import_data(self):
         print(f"Downloading data for: {self.file_name}")
