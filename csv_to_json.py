@@ -35,9 +35,9 @@ cases = get_percentage(cases,'cases')
 deaths = get_csv_data('total_deaths', 'deaths')
 new_deaths = get_csv_data('new_deaths', 'new_deaths')
 deaths = deaths.join(new_deaths)
-deaths = get_percentage(deaths,'deaths')
 
 df = cases.join(deaths)
+df['death_rate'] = df['deaths'] / df['cases'] * 100
 df = df.fillna(0)
 df = df.reset_index(level=[1])
 
@@ -49,7 +49,7 @@ for group in df.groupby(level=0):
         'casesPct': group[1][['date', 'percentage_cases']].values.tolist(),
         'deaths': group[1][['date', 'deaths']].values.tolist(),
         'newDeaths': group[1][['date', 'new_deaths']].values.tolist(),
-        'deathsPct': group[1][['date', 'percentage_deaths']].values.tolist(),
+        'deathRate': group[1][['date', 'death_rate']].values.tolist(),
 
     }
 
