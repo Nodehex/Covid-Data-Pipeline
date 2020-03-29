@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 import json
 
 json_dir = 'json'
@@ -17,22 +18,24 @@ def get_csv_data(file_name, columns_title):
     data.columns = [columns_title]
     return data
 
-def get_percentage(df, column_factor_name, suffix):
-    percent_column_name = f'percentage_{suffix}'
-    df[percent_column_name] = df.pct_change(axis=1,fill_method='ffill')[column_factor_name]
+def get_percentage(df, column_factor_name):
+    percent_column_name = f'percentage_{column_factor_name}'
+    df[percent_column_name] = df[column_factor_name].pct_change(fill_method='ffill')
     df[percent_column_name] = df[percent_column_name].abs() * 100
-    df[percent_column_name] = df[percent_column_name].replace({0:100,100:0})
+    df[percent_column_name] = df[percent_column_name].replace({100:0, np.inf: np.nan})
+    df = df.fillna(0)
+
     return df
 
 cases = get_csv_data('total_cases', 'cases')
 new_cases = get_csv_data('new_cases', 'new_cases')
 cases = cases.join(new_cases)
-cases = get_percentage(cases,'new_cases', 'cases')
+cases = get_percentage(cases,'cases')
 
 deaths = get_csv_data('total_deaths', 'deaths')
 new_deaths = get_csv_data('new_deaths', 'new_deaths')
 deaths = deaths.join(new_deaths)
-deaths = get_percentage(deaths,'new_deaths','deaths')
+deaths = get_percentage(deaths,'deaths')
 
 df = cases.join(deaths)
 df = df.fillna(0)
