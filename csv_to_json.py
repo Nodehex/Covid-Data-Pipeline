@@ -17,23 +17,36 @@ def get_csv_data(file_name, columns_title):
     data.columns = [columns_title]
     return data
 
-cases = get_csv_data('total_cases', 'cases')
-deaths = get_csv_data('total_deaths', 'deaths')
-new_cases = get_csv_data('new_cases', 'new_cases')
-new_cases_perc = cases.pct_change(axis=1,fill_method='ffill')['new_cases_perc']
-new_deaths = get_csv_data('new_deaths', 'new_deaths')
+def get_percentage(df, column_factor_name, suffix):
+    percent_column_name = f'percentage_{suffix}'
+    df[percent_column_name] = df.pct_change(axis=1,fill_method='ffill')[column_factor_name]
+    df[percent_column_name] = df[percent_column_name].abs() * 100
+    df[percent_column_name] = df[percent_column_name].replace({0:100,100:0})
+    return df
 
-df = cases.join(deaths).join(new_cases).join(new_deaths).join(new_cases_perc)
+cases = get_csv_data('total_cases', 'cases')
+new_cases = get_csv_data('new_cases', 'new_cases')
+cases = cases.join(new_cases)
+cases = get_percentage(cases,'new_cases', 'cases')
+
+deaths = get_csv_data('total_deaths', 'deaths')
+new_deaths = get_csv_data('new_deaths', 'new_deaths')
+deaths = deaths.join(new_deaths)
+deaths = get_percentage(deaths,'new_deaths','deaths')
+
+df = cases.join(deaths)
 df = df.reset_index(level=[1])
 
 data = {}
 for group in df.groupby(level=0):
     data[group[0]] = { 
         'cases': group[1][['date', 'cases']].values.tolist(),
-        'deaths': group[1][['date', 'deaths']].values.tolist(),
         'newCases': group[1][['date', 'new_cases']].values.tolist(),
-        'newCasesPerc': group[1][['date', 'new_cases_perc']].values.tolist(),
+        'casesPct': group[1][['date', 'percentage_cases']].values.tolist(),
+        'deaths': group[1][['date', 'deaths']].values.tolist(),
         'newDeaths': group[1][['date', 'new_deaths']].values.tolist(),
+        'deathsPct': group[1][['date', 'percentage_deaths']].values.tolist(),
+
     }
 
 file_name = 'full_data'
