@@ -10,19 +10,29 @@ if not os.path.isdir(csv_dir):
 
 os.makedirs(json_dir, exist_ok=True)
 
+def get_csv_data(file_name, columns_title):
+    file_path = os.path.join(csv_dir, f'{file_name}.csv')
+    data = pd.read_csv(file_path, index_col=0)
+    data = data.unstack().to_frame()
+    data.columns = [columns_title]
+    return data
 
-cases_name = 'total_cases'
-cases_path = os.path.join(csv_dir, f'{cases_name}.csv')
+def get_percentage(df, column_factor_name, suffix):
+    percent_column_name = f'percentage_{suffix}'
+    df[percent_column_name] = df.pct_change(axis=1,fill_method='ffill')[column_factor_name]
+    df[percent_column_name] = df[percent_column_name].abs() * 100
+    df[percent_column_name] = df[percent_column_name].replace({0:100,100:0})
+    return df
 
-cases = pd.read_csv(cases_path, index_col=0)
-cases = cases.unstack().to_frame()
-cases.columns = ['cases']
+cases = get_csv_data('total_cases', 'cases')
+new_cases = get_csv_data('new_cases', 'new_cases')
+cases = cases.join(new_cases)
+cases = get_percentage(cases,'new_cases', 'cases')
 
-deaths_name = 'total_deaths'
-deaths_path = os.path.join(csv_dir, f'{deaths_name}.csv')
-deaths = pd.read_csv(deaths_path, index_col=0)
-deaths = deaths.unstack().to_frame()
-deaths.columns = ['deaths']
+deaths = get_csv_data('total_deaths', 'deaths')
+new_deaths = get_csv_data('new_deaths', 'new_deaths')
+deaths = deaths.join(new_deaths)
+deaths = get_percentage(deaths,'new_deaths','deaths')
 
 df = cases.join(deaths)
 df = df.reset_index(level=[1])
@@ -31,7 +41,12 @@ data = {}
 for group in df.groupby(level=0):
     data[group[0]] = { 
         'cases': group[1][['date', 'cases']].values.tolist(),
+        'newCases': group[1][['date', 'new_cases']].values.tolist(),
+        'casesPct': group[1][['date', 'percentage_cases']].values.tolist(),
         'deaths': group[1][['date', 'deaths']].values.tolist(),
+        'newDeaths': group[1][['date', 'new_deaths']].values.tolist(),
+        'deathsPct': group[1][['date', 'percentage_deaths']].values.tolist(),
+
     }
 
 file_name = 'full_data'

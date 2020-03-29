@@ -56,14 +56,26 @@ total_cases_url = 'https://covid.ourworldindata.org/data/ecdc/total_cases.csv'
 total_cases = GetData(total_cases_url)
 total_cases.make_dir()
 total_cases.import_data()
-print(total_cases)
 total_cases.compare_data()
+
+# European Center of Disease Control Total Cases
+new_cases_url = 'https://covid.ourworldindata.org/data/ecdc/new_cases.csv'
+new_cases = GetData(new_cases_url)
+new_cases.make_dir()
+new_cases.import_data()
+new_cases.compare_data()
 
 # European Center of Disease Control Total Deaths
 total_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/total_deaths.csv'
 total_deaths = GetData(total_deaths_url)
 total_deaths.import_data()
 total_deaths.compare_data()
+
+# European Center of Disease Control Total Deaths
+new_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/new_deaths.csv'
+new_deaths = GetData(new_deaths_url)
+new_deaths.import_data()
+new_deaths.compare_data()
 
 
 # European Center of Disease Control Total Combined
