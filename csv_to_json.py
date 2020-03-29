@@ -10,21 +10,19 @@ if not os.path.isdir(csv_dir):
 
 os.makedirs(json_dir, exist_ok=True)
 
+def get_csv_data(file_name, columns_title):
+    file_path = os.path.join(csv_dir, f'{file_name}.csv')
+    data = pd.read_csv(file_path, index_col=0)
+    data = data.unstack().to_frame()
+    data.columns = [columns_title]
+    return data
 
-cases_name = 'total_cases'
-cases_path = os.path.join(csv_dir, f'{cases_name}.csv')
+cases = get_csv_data('total_cases', 'cases')
+deaths = get_csv_data('total_deaths', 'deaths')
+new_cases = get_csv_data('new_cases', 'new_cases')
+new_deaths = get_csv_data('new_deaths', 'new_deaths')
 
-cases = pd.read_csv(cases_path, index_col=0)
-cases = cases.unstack().to_frame()
-cases.columns = ['cases']
-
-deaths_name = 'total_deaths'
-deaths_path = os.path.join(csv_dir, f'{deaths_name}.csv')
-deaths = pd.read_csv(deaths_path, index_col=0)
-deaths = deaths.unstack().to_frame()
-deaths.columns = ['deaths']
-
-df = cases.join(deaths)
+df = cases.join(deaths).join(new_cases).join(new_deaths)
 df = df.reset_index(level=[1])
 
 data = {}
@@ -32,6 +30,8 @@ for group in df.groupby(level=0):
     data[group[0]] = { 
         'cases': group[1][['date', 'cases']].values.tolist(),
         'deaths': group[1][['date', 'deaths']].values.tolist(),
+        'newCases': group[1][['date', 'new_cases']].values.tolist(),
+        'newDeaths': group[1][['date', 'new_deaths']].values.tolist(),
     }
 
 file_name = 'full_data'
