@@ -20,9 +20,10 @@ def get_csv_data(file_name, columns_title):
 cases = get_csv_data('total_cases', 'cases')
 deaths = get_csv_data('total_deaths', 'deaths')
 new_cases = get_csv_data('new_cases', 'new_cases')
+new_cases_perc = cases.pct_change(axis=1,fill_method='ffill')['new_cases_perc']
 new_deaths = get_csv_data('new_deaths', 'new_deaths')
 
-df = cases.join(deaths).join(new_cases).join(new_deaths)
+df = cases.join(deaths).join(new_cases).join(new_deaths).join(new_cases_perc)
 df = df.reset_index(level=[1])
 
 data = {}
@@ -31,6 +32,7 @@ for group in df.groupby(level=0):
         'cases': group[1][['date', 'cases']].values.tolist(),
         'deaths': group[1][['date', 'deaths']].values.tolist(),
         'newCases': group[1][['date', 'new_cases']].values.tolist(),
+        'newCasesPerc': group[1][['date', 'new_cases_perc']].values.tolist(),
         'newDeaths': group[1][['date', 'new_deaths']].values.tolist(),
     }
 
