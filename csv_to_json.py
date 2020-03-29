@@ -35,6 +35,7 @@ deaths = deaths.join(new_deaths)
 deaths = get_percentage(deaths,'new_deaths','deaths')
 
 df = cases.join(deaths)
+df = df.fillna(0)
 df = df.reset_index(level=[1])
 
 data = {}
