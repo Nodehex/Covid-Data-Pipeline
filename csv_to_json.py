@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 import json
 
 json_dir = 'json'
@@ -21,7 +22,7 @@ def get_percentage(df, column_factor_name):
     percent_column_name = f'percentage_{column_factor_name}'
     df[percent_column_name] = df[column_factor_name].pct_change(fill_method='ffill')
     df[percent_column_name] = df[percent_column_name].abs() * 100
-    df[percent_column_name] = df[percent_column_name].replace({100:0})
+    df[percent_column_name] = df[percent_column_name].replace({100:0, np.inf: np.nan})
     df = df.fillna(0)
 
     return df
