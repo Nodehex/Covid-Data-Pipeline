@@ -38,11 +38,9 @@ class GetData():
         if self.old_data is None:
             self.save_to_file() 
             return
-        new_columns = self.data.columns
-        for column in self.old_data.columns:
-            if column not in new_columns:
-                print(f'{column} not present in new column')
-                return
+        if len(self.data.index) <= len(self.old_data):
+            print(f'{self.file_name} has not yet updated. Skipping')
+            return
         self.save_to_file()
 
     def save_to_file(self):
