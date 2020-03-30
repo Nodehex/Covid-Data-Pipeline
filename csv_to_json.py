@@ -3,8 +3,9 @@ import pandas as pd
 import numpy as np
 import json
 
-json_dir = 'json'
-csv_dir = './csv'
+path = os.path.dirname(os.path.abspath(__file__))
+json_dir = path + '/json'
+csv_dir = path + '/csv'
 
 if not os.path.isdir(csv_dir):
     raise NameError('csv folder doesnt exist')
@@ -12,7 +13,7 @@ if not os.path.isdir(csv_dir):
 os.makedirs(json_dir, exist_ok=True)
 
 def get_csv_data(file_name, columns_title):
-    file_path = os.path.join(csv_dir, f'{file_name}.csv')
+    file_path = f'{csv_dir}/{file_name}.csv'
     data = pd.read_csv(file_path, index_col=0)
     data = data.unstack().to_frame()
     data.columns = [columns_title]
@@ -54,4 +55,4 @@ for group in df.groupby(level=0):
     }
 
 file_name = 'full_data'
-open(f'./json/{file_name}.json', 'w').write(json.dumps(data))
+open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))

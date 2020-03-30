@@ -4,7 +4,7 @@ import io
 import pandas as pd
 
 class GetData():
-    directory = 'csv'
+    directory = os.path.dirname(os.path.abspath(__file__)) + '/csv'
 
     def __init__(self, url):
         self.url = url
@@ -27,7 +27,7 @@ class GetData():
         return str(self.data.head())
 
     def set_old_data(self):
-        old_filepath = f'./{self.directory}/{self.file_name}.csv'
+        old_filepath = f'{self.directory}/{self.file_name}.csv'
         if os.path.isfile(old_filepath) is False:
             print(f'There doesnt appear to be an old {self.file_name}.')
         else:
@@ -47,7 +47,7 @@ class GetData():
 
     def save_to_file(self):
         print(f'Writing {self.file_name} to file')
-        self.data.to_csv(f"./{self.directory}/{self.file_name}.csv", na_rep="0")
+        self.data.to_csv(f"{self.directory}/{self.file_name}.csv", na_rep="0")
         print(f'Writing {self.file_name} complete')
 
 
