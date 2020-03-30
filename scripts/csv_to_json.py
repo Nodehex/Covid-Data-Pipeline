@@ -3,9 +3,8 @@ import pandas as pd
 import numpy as np
 import json
 
-path = os.path.dirname(os.path.abspath(__file__))
-json_dir = path + '/json'
-csv_dir = path + '/csv'
+json_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'json'))
+csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
 
 if not os.path.isdir(csv_dir):
     raise NameError('csv folder doesnt exist')
