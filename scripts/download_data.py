@@ -4,7 +4,7 @@ import io
 import pandas as pd
 
 class GetData():
-    directory = os.path.dirname(os.path.abspath(__file__)) + '/csv'
+    directory = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
 
     def __init__(self, url):
         self.url = url
