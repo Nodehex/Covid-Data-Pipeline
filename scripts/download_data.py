@@ -77,3 +77,8 @@ new_deaths.download_data()
 total_combined_url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
 total_combined = GetData(total_combined_url)
 total_combined.download_data()
+
+# John Hopkin's University Recovered
+recovered_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+recovered = GetData(recovered_url)
+recovered.download_data()
