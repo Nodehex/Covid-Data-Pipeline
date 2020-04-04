@@ -5,6 +5,7 @@ import json
 
 json_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'json'))
 csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
+data_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data'))
 
 if not os.path.isdir(csv_dir):
     raise NameError('csv folder doesnt exist')
@@ -41,7 +42,7 @@ df.index.names = ['Country', 'date']
 df['death_rate'] = df['deaths'] / df['cases'] * 100
 df = df.fillna(0)
 
-alpha3 = pd.read_csv('../data/country_codes.csv')
+alpha3 = pd.read_csv(f'{data_dir}/country_codes.csv')
 pattern = {',': '','ç': 'c', 'ô': 'o', '’': "'", 'é': ''}
 alpha3['Country or Area'] = alpha3['Country or Area'].replace(pattern, regex=True)
 alpha3['Country or Area'] = alpha3['Country or Area'].str.replace('\(.*\)', '',regex=True)
