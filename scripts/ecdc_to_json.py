@@ -51,9 +51,14 @@ alpha3['Country or Area'] = alpha3['Country or Area'].str.strip()
 alpha3 = alpha3.set_index('Country or Area')
 alpha3 = alpha3['ISO-alpha3 code']
 
-country_fixes = {'World': 'NA', 'Brunei': 'BRN', 'Czech Republic': 'CZE', 'Vatican': 'VAT', 'United States': 'USA', 'United Kingdom': 'GBR', 'Faeroe Islands': 'FLK', 'International': 'NA', 'Timor': 'TLS', 'Tanzania': 'TZA', 'Kosovo': 'RKS','Taiwan': 'TWN', 'Laos': 'LAO', 'Syria': 'SYR', 'Macedonia': 'MKD', 'Swaziland': 'SWZ', 'Moldova': 'MDA', 'South Korea': 'KOR', 'Palestine': 'PSE', 'Russia': 'RUS', 'Sint Maarten (Dutch part)': 'SXM', 'Saint Vincent and the Grenadines': 'VCT'}
+country_fixes = {'Czech Republic': 'CZE', 'World': 'World', 'Brunei': 'BRN', 'Vatican': 'VAT', 'United States': 'USA', 'United Kingdom': 'GBR', 'International': 'International', 'Tanzania': 'TZA', 'Kosovo': 'RKS','Taiwan': 'TWN', 'Laos': 'LAO', 'Syria': 'SYR', 'Moldova': 'MDA', 'South Korea': 'KOR', 'Palestine': 'PSE', 'Russia': 'RUS', 'Sint Maarten (Dutch part)': 'SXM', 'Saint Vincent and the Grenadines': 'VCT', 'Bonaire, Sint Eustatius and Saba': 'BES', 'Saint Barthelemy': 'BLM'}
+
 country_fixes = pd.Series(country_fixes)
 alpha3 = alpha3.append(country_fixes)
+# , 'Czech Republic': 'Czechia'
+df = df.rename({'Bonaire Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba', 'Swaziland': 'Eswatini', 
+    'Timor': 'Timor-Leste', 'Faeroe Islands': 'Faroe Islands', 'Macedonia': 'North Macedonia', 'Saint Barthlemy': 'Saint Barthelemy'
+    }, level=0)
 
 df['Country'] = df.index.get_level_values(0)
 df['alpha3'] = df['Country'].map(alpha3)
@@ -75,3 +80,4 @@ for group in df.groupby(level=0):
 
 file_name = 'full_data'
 open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))
+df.to_csv(f'{data_dir}/{file_name}.csv')
