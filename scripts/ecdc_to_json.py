@@ -55,9 +55,9 @@ country_fixes = {'Czech Republic': 'CZE', 'World': 'World', 'Brunei': 'BRN', 'Va
 
 country_fixes = pd.Series(country_fixes)
 alpha3 = alpha3.append(country_fixes)
-# , 'Czech Republic': 'Czechia'
+
 df = df.rename({'Bonaire Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba', 'Swaziland': 'Eswatini', 
-    'Timor': 'Timor-Leste', 'Faeroe Islands': 'Faroe Islands', 'Macedonia': 'North Macedonia', 'Saint Barthlemy': 'Saint Barthelemy'
+    'Timor': 'Timor-Leste', 'Faeroe Islands': 'Faroe Islands', 'Czech Republic': 'Czechia', 'Macedonia': 'North Macedonia', 'Saint Barthlemy': 'Saint Barthelemy'
     }, level=0)
 
 df['Country'] = df.index.get_level_values(0)
