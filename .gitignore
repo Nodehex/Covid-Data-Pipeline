@@ -3,3 +3,4 @@ csv/*
 notebooks/json
 json/
 /venv
+.idea/
