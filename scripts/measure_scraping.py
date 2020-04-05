@@ -26,12 +26,10 @@ country_url_dict = {
 
 country_events = {}
 for country in country_url_dict.items():
-    print(country[0], country[1])
     request = requests.get(country[1])
     soup = BeautifulSoup(request.text, "html.parser")
     events = []
     timeline = soup.find(id='Timeline').parent
-    # print(timeline)
     for elem in timeline.next_siblings:
         if elem.name == 'h2':
             break
@@ -42,6 +40,4 @@ for country in country_url_dict.items():
     country_events[country[0]] = events
 
 df = pd.DataFrame({k: pd.Series(v) for k, v in country_events.items()})
-# print(country_events)
-print(df)
 df.to_csv(op.join('..', 'output', 'covid_measures.csv'))
