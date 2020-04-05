@@ -60,8 +60,6 @@ df['alpha3'] = df['Country'].map(alpha3)
 df = df.drop(columns='Country')
 df = df.reset_index(level=[1])
 
-alpha3_dict = df['alpha3'].to_dict()
-
 data = {}
 for group in df.groupby(level=0):
     data[group[0]] = {
