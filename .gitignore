@@ -4,3 +4,4 @@ notebooks/json
 json/
 /venv
 .idea/
+**/__pycache__/**
