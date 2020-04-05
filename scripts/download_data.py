@@ -33,7 +33,7 @@ class GetData():
         else:
             self.old_data = pd.read_csv(old_filepath)
 
-    def compare_data(self):
+    def save_data(self):
         self.set_old_data()
         if self.old_data is None:
             self.save_to_file() 
@@ -47,37 +47,38 @@ class GetData():
         print(f'Writing {self.file_name} to file')
         self.data.to_csv(f"{self.directory}/{self.file_name}.csv", na_rep="0")
         print(f'Writing {self.file_name} complete')
-
+    
+    def download_data(self):
+        self.make_dir()
+        self.import_data()
+        self.save_data()
 
 # European Center of Disease Control Total Cases
 total_cases_url = 'https://covid.ourworldindata.org/data/ecdc/total_cases.csv'
 total_cases = GetData(total_cases_url)
-total_cases.make_dir()
-total_cases.import_data()
-total_cases.compare_data()
-
+total_cases.download_data()
 # European Center of Disease Control Total Cases
 new_cases_url = 'https://covid.ourworldindata.org/data/ecdc/new_cases.csv'
 new_cases = GetData(new_cases_url)
-new_cases.make_dir()
-new_cases.import_data()
-new_cases.compare_data()
+new_cases.download_data()
 
 # European Center of Disease Control Total Deaths
 total_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/total_deaths.csv'
 total_deaths = GetData(total_deaths_url)
-total_deaths.import_data()
-total_deaths.compare_data()
+total_deaths.download_data()
 
 # European Center of Disease Control Total Deaths
 new_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/new_deaths.csv'
 new_deaths = GetData(new_deaths_url)
-new_deaths.import_data()
-new_deaths.compare_data()
+new_deaths.download_data()
 
 
 # European Center of Disease Control Total Combined
 total_combined_url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
 total_combined = GetData(total_combined_url)
-total_combined.import_data()
-total_combined.compare_data()
+total_combined.download_data()
+
+# John Hopkin's University Recovered
+recovered_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+recovered = GetData(recovered_url)
+recovered.download_data()
