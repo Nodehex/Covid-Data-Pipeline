@@ -43,7 +43,7 @@ df['date'] = pd.to_datetime(df['date']).apply(lambda x: x.strftime('%Y-%m-%d'))
 
 df = df.rename({'Cabo Verde': 'Cape Verde', 'US': 'United States', 'West Bank and Gaza': 'Palestine', 'Burma': 'Myanmar', 'Channel Islands': 'Jersey', 'Holy See': 'Vatican', 'Korea, South': 'South Korea', 'Falkland Islands (Islas Malvinas)': 'Falkland Islands', 'Sint Maarten': 'Sint Maarten (Dutch part)', 'Taiwan*': 'Taiwan','St Martin' :'Saint Martin'})
 
-alpha3 = pd.read_csv('../data/country_codes.csv')
+alpha3 = pd.read_csv(f'{data_dir}/country_codes.csv')
 pattern = {'ç': 'c', 'ô': 'o', '’': "'", 'é': 'e'}
 alpha3['Country or Area'] = alpha3['Country or Area'].replace(pattern, regex=True)
 alpha3['Country or Area'] = alpha3['Country or Area'].str.replace('\(.*\)', '',regex=True)
