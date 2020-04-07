@@ -1,6 +1,6 @@
 .vscode
 csv/*
-notebooks/json
+notebooks/*
 json/
 /venv
 .idea/
