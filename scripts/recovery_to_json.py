@@ -68,5 +68,7 @@ for group in df.groupby(level=0):
         'recovered': group[1][['date', 'recovered']].values.tolist()
     }
 
+# TODO add check if alpha3 is not null anywhere. if trie save to json. if not throw error
+
 file_name = 'recovery_data'
 open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))
