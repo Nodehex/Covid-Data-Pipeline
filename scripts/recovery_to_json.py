@@ -38,7 +38,10 @@ def recovery_to_json(csv_dir, json_dir, file_name, alpha3, csv_file_name='time_s
 
     df['date'] = pd.to_datetime(df['date']).apply(lambda x: x.strftime('%Y-%m-%d'))
 
-    df = df.rename({'Cabo Verde': 'Cape Verde', 'US': 'United States', 'West Bank and Gaza': 'Palestine', 'Burma': 'Myanmar', 'Channel Islands': 'Jersey', 'Holy See': 'Vatican', 'Korea, South': 'South Korea', 'Falkland Islands (Islas Malvinas)': 'Falkland Islands', 'Falkland Islands (Malvinas)': 'Falkland Islands', 'Sint Maarten': 'Sint Maarten (Dutch part)', 'Taiwan*': 'Taiwan','St Martin' :'Saint Martin'})
+    df = df.rename({'Cabo Verde': 'Cape Verde', 'US': 'United States', 'West Bank and Gaza': 'Palestine', 'Burma': 'Myanmar', 'Channel Islands': 'Jersey', 
+                    'Holy See': 'Vatican', 'Korea, South': 'South Korea', 'Falkland Islands (Islas Malvinas)': 'Falkland Islands', 
+                    'Falkland Islands (Malvinas)': 'Falkland Islands', 'Sint Maarten': 'Sint Maarten (Dutch part)', 'Taiwan*': 'Taiwan',
+                    'St Martin': 'Saint Martin'})
 
     df['Country'] = df.index.get_level_values(0)
     df['alpha3'] = df['Country'].map(alpha3)
@@ -51,7 +54,8 @@ def recovery_to_json(csv_dir, json_dir, file_name, alpha3, csv_file_name='time_s
             'recovered': group[1][['date', 'recovered']].values.tolist()
         }
 
-    # TODO add check if alpha3 is not null anywhere. if trie save to json. if not throw error
+    if df['alpha3'].isnull().values.any():
+        raise ValueError('An Alpha3 value is null in the John Hopkins Recovery Data!')
 
     open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))
 
