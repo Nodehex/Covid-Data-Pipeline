@@ -1,11 +1,16 @@
 import os
 from download_data import download_data
-
+from alpha3 import get_alpha3
+from ecdc_to_json import ecdc_to_json
 
 json_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'json'))
-csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
-data_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data'))
+os.makedirs(json_dir, exist_ok=True)
 
+csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
+os.makedirs(csv_dir, exist_ok=True)
+
+data_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data'))
+os.makedirs(data_dir, exist_ok=True)
 
 download_data_dict = {
     # European Centre for Disease Prevention and Control's Data
@@ -21,10 +26,10 @@ download_data_dict = {
 for url in download_data_dict.values():
     download_data(csv_dir, url)
 
+alpha3 = get_alpha3(data_dir, 'country_codes')
+
+ecdc_to_json(csv_dir, json_dir, 'full_data', alpha3)
 
 # TODO Implement above imports as functions and call them from in here
-# TODO  create dir path in here and pass as function arguments to above script files
-# TODO Create a function in a separate file that does the alpha3 magic and pass DF as df / save file somewhere idc
 
-import ecdc_to_json
 import recovery_to_json
