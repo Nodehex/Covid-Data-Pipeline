@@ -2,6 +2,7 @@ import os
 from download_data import download_data
 from alpha3 import get_alpha3
 from ecdc_to_json import ecdc_to_json
+from recovery_to_json import recovery_to_json
 
 json_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'json'))
 os.makedirs(json_dir, exist_ok=True)
@@ -30,6 +31,4 @@ alpha3 = get_alpha3(data_dir, 'country_codes')
 
 ecdc_to_json(csv_dir, json_dir, 'full_data', alpha3)
 
-# TODO Implement above imports as functions and call them from in here
-
-import recovery_to_json
+recovery_to_json(csv_dir, json_dir, 'recovery_data', alpha3)
