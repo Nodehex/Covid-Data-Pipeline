@@ -4,9 +4,8 @@ import io
 import pandas as pd
 
 class GetData():
-    directory = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
-
-    def __init__(self, url):
+    def __init__(self, directory, url):
+        self.directory = directory
         self.url = url
         self.file_name = url.split('/')[-1].split(".")[0]
         self.data = None
@@ -53,32 +52,13 @@ class GetData():
         self.import_data()
         self.save_data()
 
-# European Center of Disease Control Total Cases
-total_cases_url = 'https://covid.ourworldindata.org/data/ecdc/total_cases.csv'
-total_cases = GetData(total_cases_url)
-total_cases.download_data()
-# European Center of Disease Control Total Cases
-new_cases_url = 'https://covid.ourworldindata.org/data/ecdc/new_cases.csv'
-new_cases = GetData(new_cases_url)
-new_cases.download_data()
+def download_data(directory, url):
+    data = GetData(directory, url)
+    data.download_data()
 
-# European Center of Disease Control Total Deaths
-total_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/total_deaths.csv'
-total_deaths = GetData(total_deaths_url)
-total_deaths.download_data()
-
-# European Center of Disease Control Total Deaths
-new_deaths_url = 'https://covid.ourworldindata.org/data/ecdc/new_deaths.csv'
-new_deaths = GetData(new_deaths_url)
-new_deaths.download_data()
-
-
-# European Center of Disease Control Total Combined
-total_combined_url = 'https://covid.ourworldindata.org/data/ecdc/full_data.csv'
-total_combined = GetData(total_combined_url)
-total_combined.download_data()
-
-# John Hopkin's University Recovered
-recovered_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
-recovered = GetData(recovered_url)
-recovered.download_data()
+if __name__ == "__main__":
+    import os
+    csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
+    url = input('Input download URL: ')
+    data = GetData(csv_dir, url)
+    data.download_data()
