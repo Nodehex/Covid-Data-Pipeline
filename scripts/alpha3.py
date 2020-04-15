@@ -21,6 +21,4 @@ def get_alpha3(data_dir, file_name):
     return alpha3
 
 if __name__ == "__main__":
-    data_dir = input('input directory path: ')
-    file_name = input('input name of alpha3 csv file: ')
-    get_alpha3(data_dir, file_name)
+    print('Run from main.py')
