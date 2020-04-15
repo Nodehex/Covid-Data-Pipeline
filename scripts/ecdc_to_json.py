@@ -57,7 +57,7 @@ def ecdc_to_json(csv_dir, json_dir, file_name, alpha3):
         }
 
     open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))
-    df.to_csv(f'{json_dir}/{file_name}_processed.csv')
+    df.to_csv(f'{csv_dir}/{file_name}_processed.csv')
 
 if __name__ == "__main__":
     print('run this from main.py')
