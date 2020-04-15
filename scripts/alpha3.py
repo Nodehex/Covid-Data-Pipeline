@@ -14,7 +14,8 @@ def get_alpha3(data_dir, file_name):
     country_fixes = {'Czech Republic': 'CZE', 'World': 'World', 'Brunei': 'BRN', 'Vatican': 'VAT', 'United States': 'USA', 'United Kingdom': 'GBR', 
                      'International': 'International', 'Tanzania': 'TZA', 'Kosovo': 'RKS','Taiwan': 'TWN', 'Laos': 'LAO', 'Syria': 'SYR', 
                      'Moldova': 'MDA', 'South Korea': 'KOR', 'Palestine': 'PSE', 'Russia': 'RUS', 'Sint Maarten (Dutch part)': 'SXM', 
-                     'Saint Vincent and the Grenadines': 'VCT', 'Bonaire, Sint Eustatius and Saba': 'BES', 'Saint Barthelemy': 'BLM'
+                     'Saint Vincent and the Grenadines': 'VCT', 'Bonaire, Sint Eustatius and Saba': 'BES', 'Saint Barthelemy': 'BLM',
+                     'Reunion': 'REU'
                      }
     country_fixes = pd.Series(country_fixes)
     alpha3 = alpha3.append(country_fixes)
