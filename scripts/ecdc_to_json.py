@@ -34,7 +34,7 @@ def ecdc_to_json(csv_dir, json_dir, file_name, alpha3):
     df['death_rate'] = df['deaths'] / df['cases'] * 100
     df = df.fillna(0)
 
-    df = df.rename({'Bonaire Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba', 'Swaziland': 'Eswatini', 
+    df = df.rename({'Bonaire Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba', 'Swaziland': 'Eswatini',
         'Timor': 'Timor-Leste', 'Faeroe Islands': 'Faroe Islands', 'Czech Republic': 'Czechia', 'Macedonia': 'North Macedonia', 'Saint Barthlemy': 'Saint Barthelemy'
         }, level=0)
 
@@ -56,12 +56,8 @@ def ecdc_to_json(csv_dir, json_dir, file_name, alpha3):
 
         }
 
-    if df['alpha3'].isnull().values.any():
-        raise ValueError('An Alpha3 value is null in the ECDC Data!')
-
     open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))
     df.to_csv(f'{csv_dir}/{file_name}_processed.csv')
 
 if __name__ == "__main__":
     print('run this from main.py')
-
