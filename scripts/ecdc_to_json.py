@@ -56,6 +56,9 @@ def ecdc_to_json(csv_dir, json_dir, file_name, alpha3):
 
         }
 
+    if df['alpha3'].isnull().values.any():
+        raise ValueError('An Alpha3 value is null in the ECDC Data!')
+
     open(f'{json_dir}/{file_name}.json', 'w').write(json.dumps(data))
     df.to_csv(f'{csv_dir}/{file_name}_processed.csv')
 
