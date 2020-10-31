@@ -34,7 +34,7 @@ def ecdc_to_json(csv_dir, json_dir, file_name, alpha3):
     df['death_rate'] = df['deaths'] / df['cases'] * 100
     df = df.fillna(0)
 
-    df = df.rename({'Bonaire Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba', 'Swaziland': 'Eswatini', 
+    df = df.rename({'Bonaire Sint Eustatius and Saba': 'Bonaire, Sint Eustatius and Saba', 'Swaziland': 'Eswatini',
         'Timor': 'Timor-Leste', 'Faeroe Islands': 'Faroe Islands', 'Czech Republic': 'Czechia', 'Macedonia': 'North Macedonia', 'Saint Barthlemy': 'Saint Barthelemy'
         }, level=0)
 
@@ -64,4 +64,3 @@ def ecdc_to_json(csv_dir, json_dir, file_name, alpha3):
 
 if __name__ == "__main__":
     print('run this from main.py')
-

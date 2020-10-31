@@ -1,8 +1,10 @@
 import os
+import urllib.request
 from download_data import download_data
 from alpha3 import get_alpha3
 from ecdc_to_json import ecdc_to_json
 from recovery_to_json import recovery_to_json
+
 
 json_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'json'))
 os.makedirs(json_dir, exist_ok=True)
@@ -12,6 +14,9 @@ os.makedirs(csv_dir, exist_ok=True)
 
 data_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'data'))
 os.makedirs(data_dir, exist_ok=True)
+
+urllib.request.urlretrieve("https://opendata.ecdc.europa.eu/covid19/testing/json/", os.path.join(json_dir, "tests_done.json"))
+urllib.request.urlretrieve("https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/json/", os.path.join(json_dir, "hospitalizations.json"))
 
 download_data_dict = {
     # European Centre for Disease Prevention and Control's Data
