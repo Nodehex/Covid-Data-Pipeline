@@ -26,9 +26,9 @@ download_data_dict = {
     # "new_deaths_url": "https://covid.ourworldindata.org/data/ecdc/new_deaths.csv",
     # "total_combined_url": "https://covid.ourworldindata.org/data/ecdc/full_data.csv",
     # John Hopkin's Data
-    "global_recovered_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv",
-    "global_confirmed_cases_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv",
-    "global_death_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+    "recovered_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv",
+    "confirmed_cases_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv",
+    "death_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 }
 
 for url in download_data_dict.values():
@@ -36,6 +36,6 @@ for url in download_data_dict.values():
 
 alpha3 = get_alpha3(data_dir, "country_codes")
 
-ecdc_to_json(csv_dir, json_dir, "full_data", alpha3)
+# ecdc_to_json(csv_dir, json_dir, "full_data", alpha3)
 
 recovery_to_json(csv_dir, json_dir, "recovery_data", alpha3)

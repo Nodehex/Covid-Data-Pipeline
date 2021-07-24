@@ -3,7 +3,7 @@ import pandas as pd
 def get_alpha3(data_dir, file_name):
 
     alpha3 = pd.read_csv(f"{data_dir}/{file_name}.csv")
-    pattern = {",": "","ç": "c", "ô": "o", "’": "\"", "é": ""}
+    pattern = {",": "","ç": "c", "ô": "o", "’": "'", "é": ""}
     alpha3["Country or Area"] = alpha3["Country or Area"].replace(pattern, regex=True)
     alpha3["Country or Area"] = alpha3["Country or Area"].str.replace("\(.*\)", "",regex=True)
     alpha3["Country or Area"] = alpha3["Country or Area"].str.replace("\s+the", "",regex=True)

@@ -17,7 +17,7 @@ def recovery_to_json(csv_dir, json_dir, file_name, alpha3, csv_file_name="time_s
     df = df.rename({"Congo (Brazzaville)": "Congo", "Congo (Kinshasa)": "Democratic Republic of Congo"})
 
     # Dropping ships
-    df = df.drop(["Diamond Princess", "MS Zaandam"])
+    df = df.drop(["Diamond Princess", "MS Zaandam", "Summer Olympics 2020"])
 
     # Merge countries with provinces into a single row
     df = merge_provinces("China", df)
@@ -41,11 +41,14 @@ def recovery_to_json(csv_dir, json_dir, file_name, alpha3, csv_file_name="time_s
     df = df.rename({"Cabo Verde": "Cape Verde", "US": "United States", "West Bank and Gaza": "Palestine", "Burma": "Myanmar", "Channel Islands": "Jersey",
                     "Holy See": "Vatican", "Korea, South": "South Korea", "Falkland Islands (Islas Malvinas)": "Falkland Islands",
                     "Falkland Islands (Malvinas)": "Falkland Islands", "Sint Maarten": "Sint Maarten (Dutch part)", "Taiwan*": "Taiwan",
-                    "St Martin": "Saint Martin"})
+                    "St Martin": "Saint Martin", "Wallis and Futuna": "Wallis and Futuna Islands", "Saint Helena, Ascension and Tristan da Cunha": "Saint Helena" })
 
     df["Country"] = df.index.get_level_values(0)
     df["alpha3"] = df["Country"].map(alpha3)
     df = df.drop(columns="Country")
+
+    if df["alpha3"].isnull().values.any():
+        raise ValueError(f"An Alpha3 value is null in the John Hopkins Recovery Data!")
 
     data = {}
     for group in df.groupby(level=0):
@@ -53,9 +56,6 @@ def recovery_to_json(csv_dir, json_dir, file_name, alpha3, csv_file_name="time_s
             "alpha3": group[1]["alpha3"].unique()[0],
             "recovered": group[1][["date", "recovered"]].values.tolist()
         }
-
-    if df["alpha3"].isnull().values.any():
-        raise ValueError("An Alpha3 value is null in the John Hopkins Recovery Data!")
 
     open(f"{json_dir}/{file_name}.json", "w").write(json.dumps(data))
 
