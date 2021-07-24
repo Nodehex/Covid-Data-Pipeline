@@ -7,7 +7,7 @@ class GetData():
     def __init__(self, directory, url):
         self.directory = directory
         self.url = url
-        self.file_name = url.split('/')[-1].split(".")[0]
+        self.file_name = url.split("/")[-1].split(".")[0]
         self.data = None
         self.old_data = None
 
@@ -18,7 +18,7 @@ class GetData():
         print(f"Downloading data for: {self.file_name}")
         data = requests.get(self.url)
         data.raise_for_status()
-        data = pd.read_csv(io.StringIO(data.content.decode('utf-8')), index_col=0)
+        data = pd.read_csv(io.StringIO(data.content.decode("utf-8")), index_col=0)
         data = data.fillna(0)
         self.data = data
 
@@ -26,27 +26,27 @@ class GetData():
         return str(self.data.head())
 
     def set_old_data(self):
-        old_filepath = f'{self.directory}/{self.file_name}.csv'
+        old_filepath = f"{self.directory}/{self.file_name}.csv"
         if os.path.isfile(old_filepath) is False:
-            print(f'There doesnt appear to be an old {self.file_name}.')
+            print(f"There doesnt appear to be an old {self.file_name}.")
         else:
             self.old_data = pd.read_csv(old_filepath)
 
     def save_data(self):
         self.set_old_data()
         if self.old_data is None:
-            self.save_to_file() 
+            self.save_to_file()
             return
         if len(self.data.index) <= len(self.old_data):
-            print(f'{self.file_name} has not yet updated. Skipping')
+            print(f"{self.file_name} has not yet updated. Skipping")
             return
         self.save_to_file()
 
     def save_to_file(self):
-        print(f'Writing {self.file_name} to file')
+        print(f"Writing {self.file_name} to file")
         self.data.to_csv(f"{self.directory}/{self.file_name}.csv", na_rep="0")
-        print(f'Writing {self.file_name} complete')
-    
+        print(f"Writing {self.file_name} complete")
+
     def download_data(self):
         self.make_dir()
         self.import_data()
@@ -58,7 +58,7 @@ def download_data(directory, url):
 
 if __name__ == "__main__":
     import os
-    csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'csv'))
-    url = input('Input download URL: ')
+    csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "csv"))
+    url = input("Input download URL: ")
     data = GetData(csv_dir, url)
     data.download_data()
