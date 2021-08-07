@@ -8,7 +8,7 @@ def merge_provinces(country_name, df):
         df = df.drop([country_name]).append(country)
         return df
 
-def ccse_data_to_json(csv_dir, json_dir, file_name, alpha3, csv_file_name):
+def ccse_data_to_json(csv_dir, json_dir, alpha3, file_name, csv_file_name):
 
     df = pd.read_csv(f"{csv_dir}/{csv_file_name}.csv", index_col=0)
     df = df.drop(columns=["Lat", "Long"])
