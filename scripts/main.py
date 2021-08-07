@@ -1,15 +1,8 @@
 import os
-from download_data import download_data
+from helpers import download_data, get_directory_path
 from alpha3 import get_alpha3
 from ecdc_to_json import ecdc_to_json
 from ccse_data_to_json import ccse_data_to_json
-
-
-def get_directory_path(directory):
-    directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", directory))
-    # Create directories if they do not exist.
-    os.makedirs(directory_path, exist_ok=True)
-    return directory_path
 
 json_dir, csv_dir, data_dir = get_directory_path("json"), get_directory_path("csv"), get_directory_path("data")
 

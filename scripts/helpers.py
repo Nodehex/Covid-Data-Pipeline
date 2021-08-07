@@ -56,6 +56,12 @@ def download_data(directory, url):
     data = GetData(directory, url)
     data.download_data()
 
+def get_directory_path(directory):
+    directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", directory))
+    # Create directories if they do not exist.
+    os.makedirs(directory_path, exist_ok=True)
+    return directory_path
+
 if __name__ == "__main__":
     import os
     csv_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "csv"))
