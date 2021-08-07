@@ -4,10 +4,13 @@ import io
 import pandas as pd
 
 class GetData():
-    def __init__(self, directory, url):
+    def __init__(self, directory, url, file_name):
+        if file_name is None:
+            file_name = url.split("/")[-1].split(".")[0]
+
         self.directory = directory
         self.url = url
-        self.file_name = url.split("/")[-1].split(".")[0]
+        self.file_name = file_name
         self.data = None
         self.old_data = None
 
@@ -51,8 +54,8 @@ class GetData():
         self.import_data()
         self.save_data()
 
-def download_data(directory, url):
-    data = GetData(directory, url)
+def download_data(directory, url, file_name=None):
+    data = GetData(directory, url, file_name)
     data.download_data()
 
 def get_directory_path(directory):
