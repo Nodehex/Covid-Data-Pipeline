@@ -1,7 +1,6 @@
 import os
 from helpers import download_data, get_directory_path
 from alpha3 import get_alpha3
-from ecdc_to_json import ecdc_to_json
 from ccse_data_to_json import ccse_data_to_json
 
 json_dir, csv_dir, data_dir = get_directory_path("json"), get_directory_path("csv"), get_directory_path("data")
