@@ -45,7 +45,6 @@ class GetData():
     def save_to_file(self):
         print(f"Writing {self.file_name} to file")
         self.data.to_csv(f"{self.directory}/{self.file_name}.csv", na_rep="0")
-        print(f"Writing {self.file_name} complete")
 
     def download_data(self):
         self.make_dir()
